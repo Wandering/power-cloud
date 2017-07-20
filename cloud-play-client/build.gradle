@@ -1,0 +1,12 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+// https://mvnrepository.com/artifact/com.google.code.maven-play-plugin.org.playframework/play
+    compile ('com.google.code.maven-play-plugin.org.playframework:play:1.3.4'){
+        exclude module: 'jj-imaging'
+        exclude module: 'jj-simplecaptcha'
+        exclude module: 'jj-textile'
+        exclude module: 'jj-wikitext'
+    }
+    compile project(":cloud-client-core")
+    compile project(":cloud-context")
+}

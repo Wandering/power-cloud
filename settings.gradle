@@ -1,0 +1,10 @@
+rootProject.name = 'power-cloud'
+include 'cloud-client-core'
+include 'cloud-dynconfig-client'
+include 'cloud-context'
+include 'cloud-spring-client'
+include 'cloud-play-client'
+include 'cloud-common'
+include 'cloud-clustermanager-client'
+include 'cloud-monitor'
+

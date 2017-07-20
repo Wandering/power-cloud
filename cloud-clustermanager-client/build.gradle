@@ -1,0 +1,8 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile project(":cloud-client-core")
+    compile project(":cloud-context")
+    compile project(":cloud-common")
+    compile project(":cloud-dynconfig-client")
+    compile "com.alibaba:fastjson:1.2.17"
+}

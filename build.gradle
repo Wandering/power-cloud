@@ -1,0 +1,106 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1+'
+    }
+}
+apply plugin: 'java'
+sourceCompatibility=1.8
+targetCompatibility=1.8
+
+allprojects{
+    group 'com.power.yuneng.cloud'
+    version '0.0.1-SNAPSHOT'
+
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'maven-publish-auth'
+
+    repositories {
+        maven { url "http://192.168.10.49:8081/repository/maven-public/" }
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    publishing {
+        task sourceJar(type: Jar) {
+            classifier = 'sources'
+            from sourceSets.main.allSource
+        }
+
+        publications {
+            mavenJava(MavenPublication) { from components.java }
+            mavenJava(MavenPublication) {
+                artifact(sourceJar) {
+                    classifier = "sources"
+                }
+            }
+        }
+//        http://192.168.10.49:8081/repository/maven-public/
+        repositories {
+            maven {
+                name = 'power'
+                url "http://192.168.10.49:8081/repository/maven-${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}"
+            }
+        }
+    }
+}
+task createREADME() {
+    file("README.md").createNewFile()
+}
+
+test {
+    include '**/*UnitTest*'
+    include '**/*IntTest*'
+
+    ignoreFailures true
+    reports.html.enabled = false
+}
+
+
+
+subprojects {
+
+    task "createJavaProject" << {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+
+        /** 可选生成子文件夹 */
+//        file("src/main/filters").mkdirs()
+//        file("src/main/assembly").mkdirs()
+//        file("src/main/config").mkdirs()
+//        file("src/main/scripts").mkdirs()
+
+        /** 填充文件，便于git提交 */
+        file("src/main/java/com/power/cloud").mkdirs()
+        file("src/main/java/com/power/cloud/package-info.java").createNewFile()
+        file("src/main/resources").mkdirs()
+        file("src/main/resources/spring.xml").createNewFile()
+
+        file("src/test/java/com/power/cloud").mkdirs()
+        file("src/test/java/com/power/cloud/package-info.java").createNewFile()
+        file("src/test/resources/spring.xml").createNewFile()
+    }
+
+    configurations {
+        provided
+        compile.extendsFrom provided
+
+        //排除 dubbo对spring的依赖
+        all*.exclude group: 'org.springframework', module: 'spring'
+        all*.exclude group: 'asm', module: 'asm'
+        //排除log4j桥接，只允许使用logback
+        all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    }
+}
