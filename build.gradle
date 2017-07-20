@@ -83,14 +83,14 @@ subprojects {
 //        file("src/main/scripts").mkdirs()
 
         /** 填充文件，便于git提交 */
-        file("src/main/java/com/power/cloud").mkdirs()
-        file("src/main/java/com/power/cloud/package-info.java").createNewFile()
+        file("src/main/java/com/power/yuneng/cloud").mkdirs()
+        file("src/main/java/com/power/yuneng/cloud/package-info.java").createNewFile()
         file("src/main/resources").mkdirs()
-        file("src/main/resources/spring.xml").createNewFile()
+//        file("src/main/resources/spring.xml").createNewFile()
 
-        file("src/test/java/com/power/cloud").mkdirs()
-        file("src/test/java/com/power/cloud/package-info.java").createNewFile()
-        file("src/test/resources/spring.xml").createNewFile()
+        file("src/test/java/com/power/yuneng/cloud").mkdirs()
+        file("src/test/java/com/power/yuneng/cloud/package-info.java").createNewFile()
+//        file("src/test/resources/spring.xml").createNewFile()
     }
 
     configurations {
